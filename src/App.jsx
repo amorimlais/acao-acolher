@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const galleryImages = [
   '/foto1.jpeg',
   '/foto2.jpeg',
   '/foto3.jpeg',
   '/foto4.jpeg',
+  '/qrcode.jpeg',
 ].map(encodeURI)
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const carouselRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +19,13 @@ export default function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const scrollCarousel = (direction) => {
+    const container = carouselRef.current
+    if (!container) return
+    const scrollAmount = container.offsetWidth * 0.75
+    container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' })
+  }
 
   return (
     <>
@@ -114,12 +123,28 @@ export default function App() {
 
           <section id="momentos" className="section card gallery-section">
             <h2>✨ Momentos especiais</h2>
-            <div className="gallery-grid">
-              {galleryImages.map((src, index) => (
-                <figure key={index} className="gallery-item">
-                  <img src={src} alt={`Momento especial ${index + 1}`} loading="lazy" />
-                </figure>
-              ))}
+            <div className="carousel-wrapper">
+              <button
+                className="carousel-btn carousel-btn--prev"
+                onClick={() => scrollCarousel(-1)}
+                aria-label="Anterior"
+              >
+                ‹
+              </button>
+              <div className="carousel-track" ref={carouselRef}>
+                {galleryImages.map((src, index) => (
+                  <figure key={index} className="gallery-item">
+                    <img src={src} alt={`Momento especial ${index + 1}`} loading="lazy" />
+                  </figure>
+                ))}
+              </div>
+              <button
+                className="carousel-btn carousel-btn--next"
+                onClick={() => scrollCarousel(1)}
+                aria-label="Próximo"
+              >
+                ›
+              </button>
             </div>
           </section>
 
@@ -148,7 +173,10 @@ export default function App() {
 
             <div className="pix-section">
               <h3>💰 Faça uma doação via PIX</h3>
-              <p>Sua contribuição faz uma grande diferença. Se deseja, envie o QR code de PIX via formulário acima.</p>
+              <p>Sua contribuição faz uma grande diferença. Se deseja, copie a chave do PIX que está no QR CODE abaixo. </p>
+              <div className="hero-image">
+                <img src="/qrcode.jpeg" alt="QR Code PIX" className="hero-logo" />
+              </div>
               <div className="pix-preview">
                 <img src="/pix-qr.png" alt="QR PIX" onError={(e) => { e.currentTarget.style.display = 'none' }} />
               </div>
