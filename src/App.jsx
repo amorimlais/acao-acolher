@@ -5,7 +5,6 @@ const galleryImages = [
   '/foto2.jpeg',
   '/foto3.jpeg',
   '/foto4.jpeg',
-  '/qrcode.jpeg',
 ].map(encodeURI)
 
 export default function App() {
