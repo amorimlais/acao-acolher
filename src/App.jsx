@@ -23,7 +23,13 @@ export default function App() {
       <div className="app-shell">
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
           <nav className="nav-container">
-            <div className="logo-text">Ação Acolher</div>
+            <div className="logo-text">
+              <img
+                src="/logo.png"
+                alt="Logo Ação Acolher"
+                className="nav-logo"
+              />
+            </div>
             <div className="nav-links">
               <a href="#sobre">Sobre</a>
               <a href="#momentos">Momentos</a>
@@ -144,7 +150,7 @@ export default function App() {
               <h3>💰 Faça uma doação via PIX</h3>
               <p>Sua contribuição faz uma grande diferença. Se deseja, envie o QR code de PIX via formulário acima.</p>
               <div className="pix-preview">
-                <img src="/pix-qr.png" alt="QR PIX" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                <img src="/pix-qr.png" alt="QR PIX" onError={(e) => { e.currentTarget.style.display = 'none' }} />
               </div>
             </div>
           </section>
